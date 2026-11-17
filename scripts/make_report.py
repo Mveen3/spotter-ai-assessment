@@ -100,9 +100,6 @@ def main(args):
            r'\author{Naveen Mishra}', r'\date{17 November 2026}', r'\begin{document}', r'\maketitle']
 
     def section(title):
-        if title.startswith('7.'):
-            doc.add_page_break()
-            tex.append(r'\clearpage')
         doc.add_heading(title, 1)
         md.extend(['## ' + title, ''])
         tex.append(r'\section*{' + esc(title) + '}')
