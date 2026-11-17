@@ -1,0 +1,192 @@
+[
+  {
+    "model": "lgb_l1",
+    "feature": "pickup",
+    "importance": 1628.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "delivery",
+    "importance": 1641.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "equipment",
+    "importance": 564.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "route",
+    "importance": 3088.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "distance_missing",
+    "importance": 0.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "distance_invalid",
+    "importance": 0.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "distance",
+    "importance": 632.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "weight_missing",
+    "importance": 0.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "weight_invalid",
+    "importance": 0.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "weight",
+    "importance": 604.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "pickup_lat_missing",
+    "importance": 0.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "pickup_lat",
+    "importance": 24.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "pickup_lon_missing",
+    "importance": 0.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "pickup_lon",
+    "importance": 12.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "delivery_lat_missing",
+    "importance": 0.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "delivery_lat",
+    "importance": 11.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "delivery_lon_missing",
+    "importance": 0.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "delivery_lon",
+    "importance": 13.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "log_distance",
+    "importance": 43.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "inverse_distance",
+    "importance": 539.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "sqrt_distance",
+    "importance": 7.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "weight_per_mile",
+    "importance": 175.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "lat_delta",
+    "importance": 5.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "lon_delta",
+    "importance": 6.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "geo_miles",
+    "importance": 324.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "road_geo_ratio",
+    "importance": 210.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "weekday",
+    "importance": 47.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "weekend",
+    "importance": 6.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "month_start",
+    "importance": 4.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "month_end",
+    "importance": 6.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "calendar_365.25_1_sin",
+    "importance": 275.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "calendar_365.25_1_cos",
+    "importance": 794.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "calendar_365.25_2_sin",
+    "importance": 330.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "calendar_365.25_2_cos",
+    "importance": 30.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "calendar_7_1_sin",
+    "importance": 89.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "calendar_7_1_cos",
+    "importance": 150.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "calendar_7_2_sin",
+    "importance": 3.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "calendar_7_2_cos",
+    "importance": 3.0
+  }
+]

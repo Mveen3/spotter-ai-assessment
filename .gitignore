@@ -1,0 +1,20 @@
+docs/Problem_Statement.txt
+
+# Credentials and private local material must never be staged.
+.env
+.env.*
+.hidden/
+**/.hidden/
+kaggle.json
+**/kaggle.json
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+artifacts/checkpoints/
+artifacts/model_bundle.pkl
+*.tmp
+*.aux
+*.log
+*.out

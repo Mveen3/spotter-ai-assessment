@@ -1,0 +1,30 @@
+{
+  "excluded_cities": [
+    "Albany",
+    "Birmingham",
+    "Dallas",
+    "Greensboro",
+    "Lexington",
+    "Mobile",
+    "Providence",
+    "Shreveport"
+  ],
+  "training_rows": 29402,
+  "validation_rows": 2288,
+  "enriched": {
+    "rows": 2288,
+    "rmse": 544.9962633386209,
+    "mae": 126.32708147751926,
+    "wape_percent": 5.70768515672329,
+    "r2": 0.8615058368629587,
+    "bias": -91.58586069229719
+  },
+  "core": {
+    "rows": 2288,
+    "rmse": 556.5649742525342,
+    "mae": 156.41306235341924,
+    "wape_percent": 7.067023981481891,
+    "r2": 0.8555637631478986,
+    "bias": -111.3746019572951
+  }
+}

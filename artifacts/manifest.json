@@ -1,0 +1,71 @@
+{
+  "config": {
+    "rounds": 1000,
+    "device": "cpu",
+    "threads": 6,
+    "seed": 20261117,
+    "folds": [
+      [
+        "may_jun",
+        "2025-05-01",
+        "2025-07-01"
+      ],
+      [
+        "jul_aug",
+        "2025-07-01",
+        "2025-09-01"
+      ]
+    ],
+    "selection_metric": "mean_fold_rmse",
+    "blend_weights": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "candidates": {
+      "enriched": [
+        "equipment",
+        "quote",
+        "calibrated_quote",
+        "ridge_rate",
+        "lgb_l2",
+        "lgb_l1",
+        "lgb_residual",
+        "xgb_l2"
+      ],
+      "core": [
+        "equipment",
+        "ridge_rate",
+        "lgb_l2",
+        "lgb_l1",
+        "lgb_rate",
+        "xgb_l2"
+      ]
+    }
+  },
+  "data": {
+    "train": "892980fd20bac7ac0ca4ec31d3981fca48d52dec88e4f02642ab955f1efb40fe",
+    "validation": "f6cdc7c367b397b90b319fc7ad30fd0e1893fd6a714816dda54c303b0fe71151",
+    "template": "79de15adabcf807b8636b9b47ebe964d451fbcb343056c44a2c4b54a219891c6",
+    "december": "d4a0cba969e315eae3c967268914960547dc6589568e07bf6182551bdc267e6e"
+  },
+  "source": {
+    "run.py": "cfe6ac8a76f8152996c591c245a9308dbc42d0c2f2e4f93acde6b9718588a8fd",
+    "score.py": "f73af4f34acf0c43cdd6e2cd6b2c0ec8b9da4420fd6fdcd69bd86e14d4868634",
+    "__init__.py": "dac3375d9e49228f442514c382e00dbe020f3950a2a790e6bde5dac026750007",
+    "data.py": "64885ee617dda4b4d9c37c163e8b3254ce91b081f139ba356a209931933e7d79",
+    "evaluation.py": "ebb0fcc752ec9b4cfb7b1e3d7af93e3b795e727589331fbca697376b4e5c02bc",
+    "features.py": "efd236f49daad2ffc6bd2b94f39d7ff88e4d8a57e9c59f9b7114ff9ecfc65ef1",
+    "models.py": "74816b3df679e9fe80221ec2cd283af19d1317694bbe2f6339d066c3fdbfd52b",
+    "runtime.py": "d1cc18bcb231d5ec0f612c99d33b69165dbc0154c40b504cf9b31702644b7927"
+  },
+  "versions": {
+    "numpy": "1.26.4",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "lightgbm": "4.7.0",
+    "xgboost": "3.3.0",
+    "matplotlib": "3.11.0"
+  },
+  "config_hash": "d5d7488813cf41ae4b7d1c943a7be57da27d86df93b4cd174e3d1228efac82f2"
+}
