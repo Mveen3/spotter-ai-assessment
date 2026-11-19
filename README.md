@@ -6,10 +6,11 @@ record the decisions made before modeling.
 
 ## Submission
 
-- [12,000 load predictions](submission/validation_predictions.csv)
-- [31 fixed December predictions](submission/december_predictions.csv)
+- [12,000 load predictions (root)](validation_predictions.csv) · [submission copy](submission/validation_predictions.csv)
+- [31 fixed December predictions](data/december_chart_inputs.csv) · [submission copy](submission/december_predictions.csv)
+- [Interactive EDA & Modeling Notebook](notebooks/exploratory_data_analysis.ipynb)
 - [PDF report](reports/freight_rate_report.pdf) · [editable DOCX](reports/freight_rate_report.docx) · [readable report](reports/freight_rate_report.md)
-- [Required December chart](reports/candidate_december.png)
+- [Required December chart](scorer_results/candidate_december.png) · [report chart](reports/candidate_december.png)
 - [2–3 minute video script](reports/video_script.md) — record with camera on
 
 The supplied `score.py` is unchanged. It checks CSV contracts and generates the
@@ -43,15 +44,18 @@ metric is unspecified; mean tuning-fold dollar RMSE is the declared criterion.
 ├── README.md                 # Results, setup, commands
 ├── requirements.txt          # Supported dependency ranges
 ├── requirements-lock.txt     # Verified package versions
-├── run.py                    # Complete experiment entry point
+├── validation_predictions.csv# 12,000 final load rate predictions
 ├── score.py                  # Unmodified supplied scorer
-├── data/                     # Original CSVs, unchanged
-├── docs/                     # Plan and original setup instructions
+├── run.py                    # Complete experiment entry point
+├── data/                     # Original CSVs and completed december_chart_inputs.csv
+├── docs/                     # Plan, requirements, and setup instructions
 ├── freight/                  # Data, features, models, evaluation, checkpoints
+├── notebooks/                # Interactive EDA and modeling Jupyter notebook
 ├── scripts/                  # Audit, inference, reporting, verification
 ├── tests/                    # Leakage, model, and split checks
 ├── artifacts/                # Audit, metrics, predictions, manifest, local models
 │   └── checkpoints/          # Resumable state, not committed
+├── scorer_results/           # Default scorer output (candidate_december.png)
 ├── submission/               # Final CSVs ready to submit
 └── reports/                  # PDF, DOCX, Markdown, charts, video script
 ```
@@ -111,9 +115,15 @@ python -m scripts.audit_data
 # Regenerate outputs from the trained bundle
 python -m scripts.predict --model artifacts/model_bundle.pkl --output submission
 
-# Run the unmodified scorer
+# Run the unmodified scorer (original assessment instruction)
+python score.py --predictions validation_predictions.csv --december-predictions data/december_chart_inputs.csv
+
+# Run the unmodified scorer (submission folder layout)
 python score.py --predictions submission/validation_predictions.csv \
   --december-predictions submission/december_predictions.csv --output-dir reports
+
+# Re-run or rebuild the interactive EDA notebook
+python -m scripts.build_eda_notebook
 
 # Run small regression tests
 python -m unittest discover -s tests -v

@@ -61,9 +61,14 @@ def main(args):
     tuning = pd.read_csv(artifacts / 'tuning_metrics.csv')
     holdout = pd.read_csv(artifacts / 'locked_holdout_predictions.csv')
     december = pd.read_csv(artifacts / 'december_predictions.csv')
+    root = report_dir.resolve().parent
     for name in ['validation_predictions.csv', 'december_predictions.csv']:
         shutil.copy2(artifacts / name, submission_dir / name)
+        shutil.copy2(artifacts / name, root / name)
+    shutil.copy2(artifacts / 'december_predictions.csv', root / 'data/december_chart_inputs.csv')
     shutil.copy2(artifacts / 'scorer_results/candidate_december.png', report_dir / 'candidate_december.png')
+    (root / 'scorer_results').mkdir(parents=True, exist_ok=True)
+    shutil.copy2(artifacts / 'scorer_results/candidate_december.png', root / 'scorer_results/candidate_december.png')
 
     plt.rcParams.update({'axes.spines.top': False, 'axes.spines.right': False, 'font.size': 10})
     figure, axes = plt.subplots(1, 2, figsize=(11, 4.2), layout='constrained')
@@ -97,7 +102,7 @@ def main(args):
            r'\usepackage[T1]{fontenc}', r'\usepackage{lmodern}', r'\usepackage{graphicx,booktabs,longtable,hyperref,xcolor,xurl}',
            r'\hypersetup{colorlinks=true,urlcolor=teal,linkcolor=teal,pdftitle={Freight Rate Prediction},pdfauthor={Naveen Mishra}}', r'\setlength{\parindent}{0pt}',
            r'\setlength{\parskip}{6pt}', r'\title{Freight Rate Prediction\\\large Validation design, measured results, and reproducible submission}',
-           r'\author{Naveen Mishra}', r'\date{17 November 2026}', r'\begin{document}', r'\maketitle']
+           r'\author{Naveen Mishra}', r'\date{20 November 2026}', r'\begin{document}', r'\maketitle']
 
     def section(title):
         doc.add_heading(title, 1)

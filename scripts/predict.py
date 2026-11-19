@@ -20,4 +20,10 @@ if __name__ == '__main__':
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=True)
     submission, december = write_outputs(bundle, frames, output)
+    root = Path(args.data_dir).resolve()
+    if output != root:
+        import shutil
+        shutil.copy2(output / 'validation_predictions.csv', root / 'validation_predictions.csv')
+        shutil.copy2(output / 'december_predictions.csv', root / 'december_predictions.csv')
+        shutil.copy2(output / 'december_predictions.csv', root / 'data/december_chart_inputs.csv')
     print(f'Created {len(submission):,} load predictions and {len(december)} December predictions in {output}')

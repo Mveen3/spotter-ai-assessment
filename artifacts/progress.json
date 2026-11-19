@@ -3,9 +3,9 @@
   "completed_tasks": 37,
   "planned_tasks": 37,
   "percent": 100.0,
-  "elapsed_seconds": 70.71375158400042,
+  "elapsed_seconds": 6.195930739999994,
   "eta_seconds": 0.0,
-  "peak_ram_mib": 488.40234375,
+  "peak_ram_mib": 324.52734375,
   "gpu_memory": "12 MiB",
   "config_hash": "d5d7488813cf41ae4b7d1c943a7be57da27d86df93b4cd174e3d1228efac82f2"
 }

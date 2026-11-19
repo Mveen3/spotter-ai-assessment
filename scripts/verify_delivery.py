@@ -24,7 +24,10 @@ def main():
     pd.testing.assert_frame_equal(december.drop(columns='predicted_rate'), frames['december'].drop(columns='predicted_rate'))
     for filename in ['validation_predictions.csv', 'december_predictions.csv']:
         assert file_hash(root / 'submission' / filename) == file_hash(artifacts / filename)
+        assert file_hash(root / filename) == file_hash(artifacts / filename)
+    assert file_hash(root / 'data/december_chart_inputs.csv') == file_hash(artifacts / 'december_predictions.csv')
     assert file_hash(root / 'reports/candidate_december.png') == file_hash(artifacts / 'scorer_results/candidate_december.png')
+    assert file_hash(root / 'scorer_results/candidate_december.png') == file_hash(artifacts / 'scorer_results/candidate_december.png')
     evidence_path = artifacts / 'initial_run_evidence.json'
     reproducibility = 'not_applicable'
     if evidence_path.exists():
