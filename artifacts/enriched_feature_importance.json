@@ -2,22 +2,17 @@
   {
     "model": "lgb_l1",
     "feature": "pickup",
-    "importance": 2377.0
+    "importance": 4836.0
   },
   {
     "model": "lgb_l1",
     "feature": "delivery",
-    "importance": 2318.0
+    "importance": 4925.0
   },
   {
     "model": "lgb_l1",
     "feature": "equipment",
-    "importance": 593.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "route",
-    "importance": 7398.0
+    "importance": 1024.0
   },
   {
     "model": "lgb_l1",
@@ -26,13 +21,8 @@
   },
   {
     "model": "lgb_l1",
-    "feature": "distance_invalid",
-    "importance": 0.0
-  },
-  {
-    "model": "lgb_l1",
     "feature": "distance",
-    "importance": 447.0
+    "importance": 806.0
   },
   {
     "model": "lgb_l1",
@@ -47,37 +37,22 @@
   {
     "model": "lgb_l1",
     "feature": "weight",
-    "importance": 657.0
+    "importance": 1202.0
   },
   {
     "model": "lgb_l1",
     "feature": "market_index_missing",
-    "importance": 0.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "market_index_invalid",
-    "importance": 0.0
+    "importance": 7.0
   },
   {
     "model": "lgb_l1",
     "feature": "market_index",
-    "importance": 262.0
+    "importance": 402.0
   },
   {
     "model": "lgb_l1",
-    "feature": "quote_signal_missing",
-    "importance": 0.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "quote_signal_invalid",
-    "importance": 0.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "quote_signal",
-    "importance": 827.0
+    "feature": "market_distance",
+    "importance": 893.0
   },
   {
     "model": "lgb_l1",
@@ -87,7 +62,7 @@
   {
     "model": "lgb_l1",
     "feature": "pickup_lat",
-    "importance": 18.0
+    "importance": 104.0
   },
   {
     "model": "lgb_l1",
@@ -97,7 +72,7 @@
   {
     "model": "lgb_l1",
     "feature": "pickup_lon",
-    "importance": 10.0
+    "importance": 74.0
   },
   {
     "model": "lgb_l1",
@@ -107,7 +82,7 @@
   {
     "model": "lgb_l1",
     "feature": "delivery_lat",
-    "importance": 19.0
+    "importance": 106.0
   },
   {
     "model": "lgb_l1",
@@ -117,52 +92,52 @@
   {
     "model": "lgb_l1",
     "feature": "delivery_lon",
-    "importance": 8.0
+    "importance": 92.0
   },
   {
     "model": "lgb_l1",
     "feature": "log_distance",
-    "importance": 42.0
+    "importance": 57.0
   },
   {
     "model": "lgb_l1",
     "feature": "inverse_distance",
-    "importance": 343.0
+    "importance": 748.0
   },
   {
     "model": "lgb_l1",
     "feature": "sqrt_distance",
-    "importance": 2.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "weight_per_mile",
-    "importance": 190.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "lat_delta",
-    "importance": 7.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "lon_delta",
     "importance": 4.0
   },
   {
     "model": "lgb_l1",
+    "feature": "weight_per_mile",
+    "importance": 339.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "lat_delta",
+    "importance": 83.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "lon_delta",
+    "importance": 100.0
+  },
+  {
+    "model": "lgb_l1",
     "feature": "geo_miles",
-    "importance": 218.0
+    "importance": 525.0
   },
   {
     "model": "lgb_l1",
     "feature": "road_geo_ratio",
-    "importance": 241.0
+    "importance": 413.0
   },
   {
     "model": "lgb_l1",
     "feature": "weekday",
-    "importance": 22.0
+    "importance": 29.0
   },
   {
     "model": "lgb_l1",
@@ -172,66 +147,51 @@
   {
     "model": "lgb_l1",
     "feature": "month_start",
-    "importance": 0.0
+    "importance": 2.0
   },
   {
     "model": "lgb_l1",
     "feature": "month_end",
-    "importance": 11.0
+    "importance": 21.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_365.25_1_sin",
-    "importance": 336.0
+    "importance": 557.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_365.25_1_cos",
-    "importance": 663.0
+    "importance": 1010.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_365.25_2_sin",
-    "importance": 172.0
+    "importance": 264.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_365.25_2_cos",
-    "importance": 58.0
+    "importance": 76.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_7_1_sin",
-    "importance": 53.0
+    "importance": 57.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_7_1_cos",
-    "importance": 68.0
+    "importance": 83.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_7_2_sin",
-    "importance": 7.0
+    "importance": 22.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_7_2_cos",
-    "importance": 10.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "quote_total",
-    "importance": 676.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "market_distance",
-    "importance": 641.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "quote_market_ratio",
-    "importance": 170.0
+    "importance": 6.0
   }
 ]

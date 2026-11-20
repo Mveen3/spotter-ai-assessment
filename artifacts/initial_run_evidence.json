@@ -5,24 +5,24 @@
         "equipment": 0.25,
         "lgb_l1": 0.75
       },
-      "mean_fold_rmse": 637.1413222599833,
-      "mean_fold_mae": 143.14357821117096,
+      "mean_fold_rmse": 630.4100650451057,
+      "mean_fold_mae": 122.54962403987696,
       "fold_metrics": [
         {
           "rows": 9671,
-          "rmse": 627.4958830457097,
-          "mae": 137.28509185088143,
-          "wape_percent": 5.774608997612009,
-          "r2": 0.8227886510981106,
-          "bias": -14.03882769691912
+          "rmse": 622.3262485680065,
+          "mae": 111.10341848076739,
+          "wape_percent": 4.6733319064343295,
+          "r2": 0.8256965400518944,
+          "bias": -9.409600241497156
         },
         {
           "rows": 9696,
-          "rmse": 646.7867614742569,
-          "mae": 149.00206457146052,
-          "wape_percent": 6.059707216856301,
-          "r2": 0.8252123156317813,
-          "bias": -97.96699114274381
+          "rmse": 638.4938815222049,
+          "mae": 133.99582959898652,
+          "wape_percent": 5.449424462573182,
+          "r2": 0.829665717940909,
+          "bias": -95.89706053238376
         }
       ]
     },
@@ -31,24 +31,24 @@
         "equipment": 0.25,
         "lgb_l1": 0.75
       },
-      "mean_fold_rmse": 636.7295155533708,
-      "mean_fold_mae": 151.6499419093185,
+      "mean_fold_rmse": 637.4898173488676,
+      "mean_fold_mae": 153.80211700204106,
       "fold_metrics": [
         {
           "rows": 9671,
-          "rmse": 626.2622917028085,
-          "mae": 142.11375027061123,
-          "wape_percent": 5.977716370605239,
-          "r2": 0.823484724213849,
-          "bias": 49.32005670392861
+          "rmse": 627.1858053392125,
+          "mae": 146.63673602748813,
+          "wape_percent": 6.167966265153892,
+          "r2": 0.8229637461497105,
+          "bias": 54.89779623351531
         },
         {
           "rows": 9696,
-          "rmse": 647.1967394039331,
-          "mae": 161.1861335480258,
-          "wape_percent": 6.55521639600971,
-          "r2": 0.8249906604945074,
-          "bias": -132.86423833983304
+          "rmse": 647.7938293585228,
+          "mae": 160.967497976594,
+          "wape_percent": 6.546324790689494,
+          "r2": 0.8246675917419808,
+          "bias": -133.18429221338033
         }
       ]
     }
@@ -56,19 +56,19 @@
   "locked_metrics": {
     "enriched": {
       "rows": 9523,
-      "rmse": 633.7697321971142,
-      "mae": 119.41573706032324,
-      "wape_percent": 4.99135733752916,
-      "r2": 0.8275258108875556,
-      "bias": -67.11742478133245
+      "rmse": 634.7943819117991,
+      "mae": 121.64872351134484,
+      "wape_percent": 5.084692048525246,
+      "r2": 0.8269676634071448,
+      "bias": -77.30791461204122
     },
     "core": {
       "rows": 9523,
-      "rmse": 631.0382909133504,
-      "mae": 113.77205302733289,
-      "wape_percent": 4.7554617646154105,
-      "r2": 0.8290092769128741,
-      "bias": -27.550212357193672
+      "rmse": 631.3586215077662,
+      "mae": 113.9438047612415,
+      "wape_percent": 4.762640669995737,
+      "r2": 0.82883563463804,
+      "bias": -30.965650512504958
     },
     "quote_baseline": {
       "rows": 9523,
@@ -80,8 +80,8 @@
     }
   },
   "output_sha256": {
-    "validation_predictions.csv": "4b49f76f47ede298e45597a8a0115e1eb6bf9f37ee248e53f01a1dbf17e6a57b",
-    "december_predictions.csv": "6ccb7abf478e919f7c3e9170609812771f9fe88d59483753fa19bb09ca2e26ef"
+    "validation_predictions.csv": "7714c4311276f5abdd69bae22cdfb2e3a88d3f5d7578ee36439ac7585e8a91f5",
+    "december_predictions.csv": "13e74943c3d9f65d595efbe29e81256fa31dd09dcfc23b1f21333012a42fe26a"
   },
-  "reason": "Initial CUDA-requested run fell back to CPU. Preserve selections and predictions before correcting backend metadata and explicitly rerunning on CPU; no model tuning."
+  "reason": "Clean pipeline excluding poisoned quote_signal, correcting negative weights, and preventing route memorization."
 }

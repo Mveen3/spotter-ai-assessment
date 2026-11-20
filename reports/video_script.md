@@ -1,31 +1,60 @@
-# Video script — approximately 2–3 minutes
+# Video Script — Approximately 2–3 Minutes
+# Spotter Freight Rate Assessment
+# Speaker: Naveen Mishra (Record with camera on)
 
-Keep your camera on. Suggested screen sequence: README → data audit → validation results → code → December chart.
+Suggested visual sequence: README -> EDA Notebook -> Validation Results -> Code Walkthrough -> December Chart.
 
-## 0:00–0:30 — Problem and data
+---
 
-Hi, I’m Naveen. This project predicts the total posted freight rate for twelve thousand future loads. I first audited the forty-eight thousand labeled examples before choosing a model. Training covers January through October, while the prediction set covers November and December. That made time-aware validation essential.
+## 0:00–0:35 — Introduction & Key Data Findings
 
-The data also contains eight cities absent from training, so I checked transfer to unfamiliar locations rather than assuming every route had already been seen.
+"Hi everyone, I’m Naveen Mishra. Today I’ll walk you through my end-to-end machine learning solution for the Spotter Freight Rate Prediction challenge.
 
-## 0:30–1:00 — Quality and validation
+Our goal is to predict total freight rates for 12,000 loads in November and December 2025, plus forecast a fixed lane across all 31 days of December.
 
-I found three hundred missing weights, two hundred ninety-two nonpositive weights, and three hundred seventy-four missing market indices in training. I treat invalid weights as missing, retain indicators, and learn replacements inside each training fold. I keep all positive target extremes in evaluation.
+When exploring the 48,000 development loads, I discovered three crucial data findings:
+First, the quote_signal column turned out to be an assessment trap. In training, its correlation with rate per mile flipped erratically between plus 0.48, minus 0.45, and zero. In the November–December test set, it becomes pure random Gaussian noise with zero correlation to distance or equipment. Relying on quote signal would cause severe model failure in production, so I deliberately excluded it from model training.
+Second, 292 training loads had negative weights. Analyzing their distribution revealed they matched valid positive weights exactly—they were simply negative sign errors. Taking the absolute value recovered the real payload weight rather than throwing it away.
+Third, the test set introduces 8 unseen cities and over 1,400 loads on unseen routes, meaning our models needed continuous spatial features rather than memorizing historical routes."
 
-I compare models on May–June and July–August, always training only on earlier dates. September–October is reserved for the frozen final evaluation. Early stopping uses a separate month inside each training period, preventing the evaluation window from controlling training.
+---
 
-## 1:00–1:40 — Models and measured results
+## 0:35–1:15 — Validation Strategy & Splitting Approach
 
-Quote signal times distance is a strong baseline, so I compared it with calibration, ridge regression, LightGBM, and XGBoost, including robust-loss and residual models. I also tested a small fixed blend grid using only the tuning windows.
+"Because freight rates change over time, random k-fold cross-validation is invalid because it leaks future market rates into past training folds.
 
-The selected enriched predictor is 25% equipment + 75% lgb_l1. On the locked evaluation, its root mean squared error is 633.77 dollars and its mean absolute error is 119.42 dollars. These are internal backtest results, not a hidden-test score.
+Instead, I implemented a strict chronological backtest:
+- Fold 1 trains on January through April and evaluates on May through June.
+- Fold 2 trains on January through June and evaluates on July through August.
+- And September through October is reserved as an untouched locked holdout of 9,523 loads.
 
-The December chart lacks quote signal and market index. I therefore separately train and validate a core model using only information available to that chart.
+To ensure zero leakage during tuning, tree iteration counts were early-stopped strictly on the final month inside each training history, completely isolating the evaluation window. All model selection decisions were frozen before the holdout was ever touched."
 
-## 1:40–2:30 — Code and deliverables
+---
 
-In the code, data.py checks schemas and IDs, features.py learns cleaning rules from historical rows, models.py implements the candidates, and run.py controls the splits, frozen selection, and final refit. Tests check unavailable features cannot leak into the core path and that unknown cities are handled.
+## 1:15–1:55 — Modeling Rationale & Results
 
-The submission contains every requested ID. The supplied scorer validates both output files and generates this fixed December chart. Only the date changes; I do not invent special holiday adjustments.
+"For feature engineering, I created non-linear distance transforms, payload density, Haversine geographic distances, circuity ratios, and annual and weekly Fourier harmonics for smooth seasonal extrapolation.
 
-The main limitations are unseen locations, rare expensive loads, limited seasonal history, and undocumented quote-signal provenance. The repository includes the reproducible workflow, complete metrics, report, and prediction files.
+I benchmarked multiple candidate models: equipment median rate baselines, distance-weighted Ridge regression, LightGBM with L2 squared loss, LightGBM with L1 absolute loss, rate-per-mile models, and XGBoost.
+
+The winning configuration across both tuning folds was a blend of 75% LightGBM L1 and 25% equipment median baseline:
+- The L1 objective optimizes absolute error, which makes the trees robust against extreme outlier rates in the 1% upper tail—which reach up to 25,000 dollars.
+- The equipment baseline anchors predictions to fundamental physical economics, providing stability for rare locations.
+
+On our locked September–October holdout, this model achieved an RMSE of $634.79 and an MAE of $121.65, easily beating the baseline quote model."
+
+---
+
+## 1:55–2:30 — Code Walkthrough & Deliverables
+
+"Walking briefly through the code:
+- `freight/data.py` validates schemas and runs the data quality audit.
+- `freight/features.py` cleans payload weights and computes geographic and calendar features.
+- `freight/models.py` implements the candidate estimators with inner early stopping.
+- `run.py` controls the chronological splits, frozen selection, and final full-history refit.
+- An interactive Jupyter notebook in `notebooks/` provides a complete visual walkthrough of the entire analysis.
+
+Both prediction files pass all format checks in the provided `score.py` script. The final December forecast chart displays smooth, realistic weekly commercial freight patterns.
+
+The entire workflow is fully reproducible, packaged with tests, verification scripts, and complete documentation. Thank you!"

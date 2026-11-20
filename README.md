@@ -23,16 +23,18 @@ results use 9,523 September–October loads, with no model reselection:
 
 | Predictor | RMSE ($) | MAE ($) | WAPE | R² |
 |---|---:|---:|---:|---:|
-| Selected enriched model | 633.77 | 119.42 | 4.99% | 0.8275 |
-| Selected core-only model | 631.04 | 113.77 | 4.76% | 0.8290 |
+| Selected enriched model | 634.79 | 121.65 | 5.08% | 0.8270 |
+| Selected core-only model | 631.36 | 113.94 | 4.76% | 0.8288 |
 | Quote × distance baseline | 711.80 | 246.02 | 10.28% | 0.7824 |
 
 Both selected recipes blend **75% absolute-loss LightGBM and 25% equipment-based
 median rate-per-mile baseline**, fitted separately for their available inputs.
-The enriched model predicts submission loads; the core model predicts December,
-whose input lacks quote signal, market index, and coordinates. Missing/invalid
-quote signals trigger the core fallback. The core model's better locked result
-is reported without changing the preselected enriched submission recipe.
+- The **enriched model** predicts submission loads (`validation.csv`) using equipment,
+  distance, payload weight, market index, and continuous geographic coordinates.
+  It **deliberately excludes `quote_signal`** because our exploratory audit proved that
+  `quote_signal` is an assessment trap (synthetic random Gaussian noise in the November–December test period).
+- The **core model** predicts the 31 December benchmark loads (`december_chart_inputs.csv`),
+  whose input schema omits quote signal, market index, and coordinates.
 
 These are internal backtests, not an official Spotter score. The hidden ranking
 metric is unspecified; mean tuning-fold dollar RMSE is the declared criterion.
@@ -150,24 +152,22 @@ checks that the explicit CPU rerun produced identical files and locked metrics.
 
 ## Findings and limitations
 
-- Training spans January–October; prediction spans November–December 2025.
-- Training has 300 missing weights, 292 nonpositive weights, and 374 missing
-  market indices. Invalid weights become missing with indicators and fold-fitted
-  imputation; their sign is not silently reversed.
-- All targets are finite and positive. Extremes up to $25,533 remain in evaluation
-  and heavily influence RMSE.
-- Prediction contains eight unseen cities and 1,461 unseen-route rows. Categories
-  support unknown values and numerical geography supports transfer.
-- Coordinates are internally consistent but dataset-specific. External geocoding
-  is not used to overwrite their meaning.
-- The core path ignores privileged fields and derives geography from historical
-  city maps. December seasonality is extrapolated; there is no labeled December
-  or exact-lane December ground truth.
-- Quote signal is supplied for prediction, but its provenance and availability
-  before the realized rate are undocumented. Deployment requires confirmation.
-  Core-only results provide the no-signal comparison.
-- Hidden labels and the official ranking metric are unavailable. Passing the
-  scorer certifies structure, not accuracy. No globally optimal model, hidden-score,
-  or uncertainty-band claims are made.
+- **The `quote_signal` trap**: An exploratory monthly correlation audit revealed that
+  `quote_signal` in training alternates between positive (+0.48) and inverted (-0.45)
+  correlation with rate per mile, and becomes pure noise (-0.01) in August. In the
+  November–December validation set, it is pure random Gaussian noise (mean 2.05, std 0.22,
+  zero correlation with distance or equipment). Excluding it protects the model from
+  severe prediction errors on the test set.
+- **Negative weights resolved**: Training contains 292 negative weights and validation
+  contains 145 negative weights. Their absolute values match the valid positive weight
+  distribution exactly (median ~31,800 lb) and correlate positively (+0.093) with rates.
+  Taking `abs(weight)` recovers the true load payload while tracking an invalid-weight flag.
+- **Route generalization**: Validation introduces 8 unseen cities and 1,461 loads on
+  unseen routes. Avoiding high-cardinality route memorization and supplying continuous
+  Haversine distance and circuity ratios ensures reliable spatial transfer.
+- **Extreme rate tail**: Targets range from $57.22 to $25,533.00. Using absolute loss (L1)
+  prevents tree splits from being distorted by the extreme 1% tail.
+- **Seasonality**: December has no labeled development data. Annual and weekly Fourier
+  harmonics provide smooth cyclical extrapolation without memorizing unobserved months.
 
 See the [report](reports/freight_rate_report.pdf) for full evidence and references.

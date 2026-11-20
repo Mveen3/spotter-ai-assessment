@@ -42,7 +42,7 @@ class Contracts(unittest.TestCase):
         valid.loc[valid.index[1], 'weight'] = np.nan
         valid['pickup'] = 'UNSEEN'
         x = builder.transform(valid[CORE])
-        self.assertEqual(x.weight_missing.sum(), 2)
+        self.assertEqual(x.weight_missing.sum(), 1)
         self.assertEqual(x.weight_invalid.sum(), 1)
         self.assertTrue((x.weight > 0).all())
         self.assertTrue(x.pickup.isna().all())

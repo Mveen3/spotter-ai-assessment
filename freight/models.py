@@ -18,7 +18,7 @@ from freight.data import TARGET, purge_overlap
 from freight.features import Features
 
 CANDIDATES = {
-    'enriched': ['equipment', 'quote', 'calibrated_quote', 'ridge_rate', 'lgb_l2', 'lgb_l1', 'lgb_residual', 'xgb_l2'],
+    'enriched': ['equipment', 'ridge_rate', 'lgb_l2', 'lgb_l1', 'lgb_rate', 'xgb_l2'],
     'core': ['equipment', 'ridge_rate', 'lgb_l2', 'lgb_l1', 'lgb_rate', 'xgb_l2'],
 }
 
@@ -31,7 +31,7 @@ def positive(values):
 
 
 class Estimator:
-    def __init__(self, name, mode, rounds=1000, device='cpu', threads=6, seed=20261117):
+    def __init__(self, name, mode, rounds=1500, device='cpu', threads=6, seed=20261117):
         self.name, self.mode, self.rounds = name, mode, int(rounds)
         self.device, self.threads, self.seed = device, threads, seed
 
@@ -41,57 +41,49 @@ class Estimator:
         y = frame[TARGET].to_numpy(float)
         self.best_rounds = self.rounds
         self.actual_device = 'cpu'
+
         if self.name == 'equipment':
             rpm = pd.Series(y / x.distance.to_numpy(), index=frame.index)
             self.equipment_rpm = rpm.groupby(frame.equipment).median().to_dict()
             self.default_rpm = float(rpm.median())
             return self
-        if self.name == 'quote':
-            return self
-        if self.name == 'calibrated_quote':
-            # Regularized affine calibration in dollars; deliberately simple.
-            self.columns = ['quote_total']
-            self.model = make_pipeline(StandardScaler(), Ridge(alpha=10.))
-            with threadpool_limits(limits=self.threads):
-                self.model.fit(x[self.columns], y)
-            return self
+
         if self.name == 'ridge_rate':
-            cats = ['pickup', 'delivery', 'equipment']
-            numeric = [c for c in x if c not in self.features.categories and c not in ['quote_total', 'market_distance']]
+            cats = [c for c in ['pickup', 'delivery', 'equipment'] if c in x.columns]
+            numeric = [c for c in x if c not in cats]
             self.columns = cats + numeric
             self.model = make_pipeline(
                 ColumnTransformer([
                     ('cats', OneHotEncoder(handle_unknown='ignore', sparse_output=False), cats),
                     ('nums', StandardScaler(), numeric),
                 ]),
-                Ridge(alpha=1000.),
+                Ridge(alpha=500.),
             )
             weights = (x.distance.to_numpy() / 1000.)**2
             with threadpool_limits(limits=self.threads):
                 self.model.fit(x[self.columns], y / x.distance.to_numpy(), ridge__sample_weight=weights)
             return self
+
         weights = None
-        if self.name == 'lgb_residual':
-            y = y - x.quote_total.to_numpy()
-        elif self.name == 'lgb_rate':
+        if self.name == 'lgb_rate':
             y = y / x.distance.to_numpy()
             weights = (x.distance.to_numpy() / 1000.)**2
+
         eval_set = None
         eval_weight = None
         if early_valid is not None:
             vx = self.features.transform(early_valid)
             vy = early_valid[TARGET].to_numpy(float)
-            if self.name == 'lgb_residual':
-                vy = vy - vx.quote_total.to_numpy()
-            elif self.name == 'lgb_rate':
+            if self.name == 'lgb_rate':
                 vy = vy / vx.distance.to_numpy()
                 eval_weight = [(vx.distance.to_numpy() / 1000.)**2]
             eval_set = [(vx, vy)]
+
         if self.name.startswith('lgb'):
             self.model = lgb.LGBMRegressor(
                 objective='regression_l1' if self.name == 'lgb_l1' else 'regression',
-                n_estimators=self.rounds, learning_rate=.035, num_leaves=20,
-                min_child_samples=100, reg_lambda=30., reg_alpha=1.,
+                n_estimators=self.rounds, learning_rate=.03, num_leaves=31,
+                min_child_samples=50, reg_lambda=15., reg_alpha=1.,
                 colsample_bytree=.9, subsample=.85, subsample_freq=1,
                 max_bin=127, n_jobs=self.threads, verbosity=-1, random_state=self.seed,
                 deterministic=True, force_col_wise=True,
@@ -104,19 +96,18 @@ class Estimator:
                     kwargs.update(eval_X=eval_set[0][0], eval_y=eval_set[0][1])
                 else:
                     kwargs.update(eval_set=eval_set)
-                # Set metric explicitly so early stopping follows the declared RMSE criterion.
                 self.model.set_params(metric='rmse')
             self.model.fit(x, y, **kwargs)
             self.best_rounds = int(self.model.best_iteration_ or self.rounds)
+
         elif self.name == 'xgb_l2':
             from xgboost import XGBRegressor
-            # Attempt GPU first when requested, then smaller bins, then CPU.
             attempts = [(self.device, 128), (self.device, 64), ('cpu', 64)] if self.device == 'cuda' else [('cpu', 128)]
             for device, bins in attempts:
                 try:
                     self.model = XGBRegressor(
-                        n_estimators=self.rounds, learning_rate=.035, max_depth=5,
-                        min_child_weight=100, reg_lambda=30., reg_alpha=1.,
+                        n_estimators=self.rounds, learning_rate=.035, max_depth=6,
+                        min_child_weight=50, reg_lambda=20., reg_alpha=1.,
                         subsample=.85, colsample_bytree=.9, tree_method='hist',
                         device=device, enable_categorical=True, max_cat_to_onehot=8,
                         max_bin=bins, n_jobs=self.threads, random_state=self.seed,
@@ -133,7 +124,7 @@ class Estimator:
                         raise
                     if device == 'cpu':
                         raise
-                    print(f'GPU retry: {type(error).__name__}; retrying with a smaller histogram or CPU', flush=True)
+                    print(f'GPU retry: {type(error).__name__}; retrying with CPU', flush=True)
                     gc.collect()
         else:
             raise ValueError(self.name)
@@ -142,14 +133,10 @@ class Estimator:
     def predict(self, frame):
         x = self.features.transform(frame)
         if self.name == 'equipment':
-            return positive(frame.equipment.map(self.equipment_rpm).fillna(self.default_rpm).to_numpy() * x.distance.to_numpy())
-        if self.name == 'quote':
-            return positive(x.quote_total)
+            return positive(frame.equipment.map(self.equipment_rpm).fillna(self.default_rpm).to_numpy(float) * x.distance.to_numpy(float))
         pred = self.model.predict(x[self.columns] if hasattr(self, 'columns') else x)
         if self.name in ['ridge_rate', 'lgb_rate']:
             pred = pred * x.distance.to_numpy()
-        elif self.name == 'lgb_residual':
-            pred = pred + x.quote_total.to_numpy()
         return positive(pred)
 
 

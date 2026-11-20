@@ -122,6 +122,42 @@ def audit(frames, paths):
     ])
     inconsistencies = city.groupby('city')[['lat', 'lon']].nunique().max(axis=1)
     result['cities_with_multiple_coordinates'] = inconsistencies[inconsistencies > 1].index.tolist()
+
+    # Target statistics
+    result['target_stats'] = {
+        'mean': float(target.mean()),
+        'median': float(target.median()),
+        'min': float(target.min()),
+        'max': float(target.max()),
+        'p99': float(target.quantile(0.99)),
+    }
+
+    # Negative weights audit: confirm absolute values match positive weight distribution
+    train_weights = pd.to_numeric(train['weight'], errors='coerce')
+    neg_weights = train_weights[train_weights < 0].abs()
+    pos_weights = train_weights[train_weights > 0]
+    result['negative_weights_analysis'] = {
+        'train_negative_count': int((train_weights < 0).sum()),
+        'train_abs_neg_median': float(neg_weights.median()) if len(neg_weights) else None,
+        'train_pos_median': float(pos_weights.median()),
+        'validation_negative_count': int((pd.to_numeric(test['weight'], errors='coerce') < 0).sum()),
+    }
+
+    # Quote signal trap analysis: show monthly correlation with rate per mile
+    train_rpm = target / train['distance']
+    monthly_corr = {}
+    for month_period, df in train.groupby(train.date.dt.to_period('M')):
+        m_rpm = df[TARGET] / df['distance']
+        monthly_corr[str(month_period)] = float(m_rpm.corr(df['quote_signal']))
+    val_qs = test['quote_signal']
+    result['quote_signal_trap_audit'] = {
+        'monthly_train_rpm_correlation': monthly_corr,
+        'validation_mean': float(val_qs.mean()),
+        'validation_std': float(val_qs.std()),
+        'validation_distance_correlation': float(val_qs.corr(test['distance'])),
+        'is_noise_in_validation': bool(abs(val_qs.corr(test['distance'])) < 0.05),
+    }
+
     good = np.isfinite(target) & (target > 0) & (train.distance > 0) & (train.quote_signal > 0)
     error = target[good] - train.loc[good, 'distance'] * train.loc[good, 'quote_signal']
     result['quote_diagnostic_not_backtest'] = {

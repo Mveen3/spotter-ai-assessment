@@ -1,11 +1,11 @@
 {
   "stage": "complete",
-  "completed_tasks": 37,
-  "planned_tasks": 37,
+  "completed_tasks": 33,
+  "planned_tasks": 33,
   "percent": 100.0,
-  "elapsed_seconds": 6.195930739999994,
+  "elapsed_seconds": 69.20467519299928,
   "eta_seconds": 0.0,
-  "peak_ram_mib": 324.52734375,
+  "peak_ram_mib": 434.921875,
   "gpu_memory": "12 MiB",
-  "config_hash": "d5d7488813cf41ae4b7d1c943a7be57da27d86df93b4cd174e3d1228efac82f2"
+  "config_hash": "02830ecdcc0787619da68a0564b45f15e05107e3e5b8c82476a1deed79f1ff6c"
 }

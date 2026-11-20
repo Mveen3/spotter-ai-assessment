@@ -277,6 +277,37 @@
     "feature_overlap_rows": 0
   },
   "cities_with_multiple_coordinates": [],
+  "target_stats": {
+    "mean": 2373.980682291666,
+    "median": 2030.76,
+    "min": 57.22,
+    "max": 25533.0,
+    "p99": 5972.834000000003
+  },
+  "negative_weights_analysis": {
+    "train_negative_count": 292,
+    "train_abs_neg_median": 31821.5,
+    "train_pos_median": 31493.5,
+    "validation_negative_count": 145
+  },
+  "quote_signal_trap_audit": {
+    "monthly_train_rpm_correlation": {
+      "2025-01": 0.4467029503575814,
+      "2025-02": 0.47904228231568413,
+      "2025-03": 0.48584220229067815,
+      "2025-04": -0.47174215596030383,
+      "2025-05": -0.4592295037448686,
+      "2025-06": 0.4766317214139116,
+      "2025-07": -0.46834519361626076,
+      "2025-08": -0.013595218943453585,
+      "2025-09": 0.48143724741052457,
+      "2025-10": -0.43397322357729545
+    },
+    "validation_mean": 2.0513338391666665,
+    "validation_std": 0.21980403310695484,
+    "validation_distance_correlation": 0.011361609565494651,
+    "is_noise_in_validation": true
+  },
   "quote_diagnostic_not_backtest": {
     "mae": 232.25818392779166,
     "rmse": 674.5716239426521,

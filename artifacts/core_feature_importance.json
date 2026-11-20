@@ -2,22 +2,17 @@
   {
     "model": "lgb_l1",
     "feature": "pickup",
-    "importance": 1628.0
+    "importance": 3613.0
   },
   {
     "model": "lgb_l1",
     "feature": "delivery",
-    "importance": 1641.0
+    "importance": 3417.0
   },
   {
     "model": "lgb_l1",
     "feature": "equipment",
-    "importance": 564.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "route",
-    "importance": 3088.0
+    "importance": 829.0
   },
   {
     "model": "lgb_l1",
@@ -26,13 +21,8 @@
   },
   {
     "model": "lgb_l1",
-    "feature": "distance_invalid",
-    "importance": 0.0
-  },
-  {
-    "model": "lgb_l1",
     "feature": "distance",
-    "importance": 632.0
+    "importance": 804.0
   },
   {
     "model": "lgb_l1",
@@ -47,7 +37,7 @@
   {
     "model": "lgb_l1",
     "feature": "weight",
-    "importance": 604.0
+    "importance": 1110.0
   },
   {
     "model": "lgb_l1",
@@ -57,7 +47,7 @@
   {
     "model": "lgb_l1",
     "feature": "pickup_lat",
-    "importance": 24.0
+    "importance": 80.0
   },
   {
     "model": "lgb_l1",
@@ -67,7 +57,7 @@
   {
     "model": "lgb_l1",
     "feature": "pickup_lon",
-    "importance": 12.0
+    "importance": 49.0
   },
   {
     "model": "lgb_l1",
@@ -77,7 +67,7 @@
   {
     "model": "lgb_l1",
     "feature": "delivery_lat",
-    "importance": 11.0
+    "importance": 71.0
   },
   {
     "model": "lgb_l1",
@@ -87,106 +77,106 @@
   {
     "model": "lgb_l1",
     "feature": "delivery_lon",
-    "importance": 13.0
+    "importance": 63.0
   },
   {
     "model": "lgb_l1",
     "feature": "log_distance",
-    "importance": 43.0
+    "importance": 42.0
   },
   {
     "model": "lgb_l1",
     "feature": "inverse_distance",
-    "importance": 539.0
+    "importance": 799.0
   },
   {
     "model": "lgb_l1",
     "feature": "sqrt_distance",
-    "importance": 7.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "weight_per_mile",
-    "importance": 175.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "lat_delta",
     "importance": 5.0
   },
   {
     "model": "lgb_l1",
-    "feature": "lon_delta",
-    "importance": 6.0
+    "feature": "weight_per_mile",
+    "importance": 243.0
   },
   {
     "model": "lgb_l1",
-    "feature": "geo_miles",
-    "importance": 324.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "road_geo_ratio",
-    "importance": 210.0
-  },
-  {
-    "model": "lgb_l1",
-    "feature": "weekday",
+    "feature": "lat_delta",
     "importance": 47.0
   },
   {
     "model": "lgb_l1",
+    "feature": "lon_delta",
+    "importance": 58.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "geo_miles",
+    "importance": 517.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "road_geo_ratio",
+    "importance": 270.0
+  },
+  {
+    "model": "lgb_l1",
+    "feature": "weekday",
+    "importance": 79.0
+  },
+  {
+    "model": "lgb_l1",
     "feature": "weekend",
-    "importance": 6.0
+    "importance": 11.0
   },
   {
     "model": "lgb_l1",
     "feature": "month_start",
-    "importance": 4.0
+    "importance": 1.0
   },
   {
     "model": "lgb_l1",
     "feature": "month_end",
-    "importance": 6.0
+    "importance": 2.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_365.25_1_sin",
-    "importance": 275.0
+    "importance": 454.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_365.25_1_cos",
-    "importance": 794.0
+    "importance": 1299.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_365.25_2_sin",
-    "importance": 330.0
+    "importance": 575.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_365.25_2_cos",
-    "importance": 30.0
+    "importance": 56.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_7_1_sin",
-    "importance": 89.0
+    "importance": 114.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_7_1_cos",
-    "importance": 150.0
+    "importance": 218.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_7_2_sin",
-    "importance": 3.0
+    "importance": 10.0
   },
   {
     "model": "lgb_l1",
     "feature": "calendar_7_2_cos",
-    "importance": 3.0
+    "importance": 2.0
   }
 ]
